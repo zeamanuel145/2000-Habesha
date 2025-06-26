@@ -93,11 +93,67 @@
           </div>
           <button
             onclick="openReservationModal()"
-            class="bg-amber-800 text-white px-6 py-2 rounded-lg hover:bg-amber-900 transition-colors"
+            class="hidden md:flex bg-amber-800 text-white px-6 py-2 rounded-lg hover:bg-amber-900 transition-colors"
           >
             Reserve
           </button>
+          <div>
+            <button
+              id="mobileMenu"
+              class="text-3xl sm:hidden focus:outline-none text-black"
+              onclick="document.getElementById('mob-nav').classList.toggle('hidden')"
+            >
+              &#9776;
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Navigation section for mobile -->
+
+      <div id="mob-nav" class="sm:hidden">
+        <ul class="list-none text-center">
+          <li>
+            <a
+              href="#home"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+              >Home</a
+            >
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#featuredBtn"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+            >
+              Menu
+            </a>
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#story"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+              >Our Story</a
+            >
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#feedback"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+              >Feedback</a
+            >
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#contact"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl mb-4"
+              >Contact</a
+            >
+          </li>
+        </ul>
       </div>
     </nav>
 
