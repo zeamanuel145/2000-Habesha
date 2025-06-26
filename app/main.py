@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ✅ During development, allows frontend JS to call this API
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,21 +33,3 @@ Key info you should always include:
 - Contact: Same number above
 """
 
-@app.post("/chat")
-async def chat(request: ChatRequest):
-    user_message = request.user_message.strip()
-
-    if not user_message:
-        raise HTTPException(status_code=400, detail="Empty message received.")
-
-    try:
-        model = genai.GenerativeModel('gemini-pro')
-        full_prompt = f"{restaurant_context}\n\nGuest: {user_message}\n\nYou:"
-        response = model.generate_content(full_prompt)
-        ai_reply = response.text.strip()
-
-        return {"bot_response": ai_reply}
-
-    except Exception as e:
-        print("Error with Gemini API:", str(e))
-        raise HTTPException(status_code=500, detail="Internal server error. Please try again later.")
