@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
-from app.config import settings
+from .config import settings
 
 # Configure Gemini API
 genai.configure(api_key=settings.GEMINI_API_KEY)
