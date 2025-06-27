@@ -1,63 +1,72 @@
-from fastapi import FastAPI, HTTPException
+from datetime import datetime
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
+import logging
 from .config import settings
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from slowapi.middleware import SlowAPIMiddleware
 
-# Configure Gemini API
-genai.configure(api_key=settings.GEMINI_API_KEY)
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
+# Initialize FastAPI with rate limiting
+limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
+app.state.limiter = limiter
+app.add_middleware(SlowAPIMiddleware)
 
-# Allow CORS for testing from anywhere
+# Configure Gemini
+genai.configure(api_key=settings.GEMINI_API_KEY)
+model = genai.GenerativeModel('gemini-1.5-pro')
+
+# Production CORS settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_methods=["POST", "GET"],
+    allow_headers=["Content-Type"],
 )
 
-# Test GET route to avoid 404 in browser
-@app.get("/")
-def root():
-    return {"message": "Habesha Flavors Chatbot is running"}
+# Restaurant context (consider moving to config.py)
+RESTAURANT_CONTEXT = """..."""
 
-# Pydantic model for incoming request
 class ChatRequest(BaseModel):
     user_message: str
 
-# Restaurant context for Gemini prompt
-restaurant_context = """
-You are the AI chatbot for Habesha Flavors Restaurant, based in Addis Ababa.
+@app.get("/")
+def root():
+    return {"status": "running", "service": "Habesha Flavors Chatbot"}
 
-Your tone: Friendly, warm, culturally authentic Ethiopian host.
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now().isoformat(),
+        "gemini_ready": True
+    }
 
-Key info you should always include:
-- Opening Hours: Daily 10AM–11PM (Live shows in the evening)
-- Signature Dishes: Kitfo, Doro Wat, Tibs, Shiro
-- Dietary Options: Vegan and Vegetarian (Shiro, Gomen, Vegetarian Combo)
-- Location: Namibia Street, Bole Atlas, near Ethiopian Skylight Hotel
-- Reservations: Call +251 912 838 383, book on website, or ask in chat
-- Contact: Same number above
-"""
-
-# POST endpoint for chatbot
 @app.post("/chat")
-async def chat(request: ChatRequest):
-    user_message = request.user_message.strip()
-
-    if not user_message:
-        raise HTTPException(status_code=400, detail="Empty message received.")
-
+@limiter.limit("5/minute")
+async def chat(request: Request, chat_request: ChatRequest):
     try:
-        model = genai.GenerativeModel('gemini-1.5-pro')
-        full_prompt = f"{restaurant_context}\n\nGuest: {user_message}\n\nYou:"
+        if not chat_request.user_message.strip():
+            raise HTTPException(status_code=400, detail="Empty message")
+            
+        full_prompt = f"{RESTAURANT_CONTEXT}\n\nGuest: {chat_request.user_message}\n\nYou:"
         response = model.generate_content(full_prompt)
-        ai_reply = response.text.strip()
-
-        return {"bot_response": ai_reply}
-
+        
+        if not response.text:
+            raise HTTPException(status_code=502, detail="Empty AI response")
+            
+        return {"bot_response": response.text.strip()}
+        
+    except genai.APIError as e:
+        logger.error(f"Gemini API Error: {e}")
+        raise HTTPException(status_code=502, detail="AI service unavailable")
     except Exception as e:
-        print("Error with Gemini API:", str(e))
-        raise HTTPException(status_code=500, detail="Internal server error. Please try again later.")
+        logger.error(f"Unexpected error: {e}")
+        raise HTTPException(status_code=500)
