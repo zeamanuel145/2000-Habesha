@@ -2,38 +2,41 @@ from pydantic_settings import BaseSettings
 from pydantic import Field, field_validator
 from dotenv import load_dotenv
 import logging
-from typing import Optional, List
+from typing import List, Optional
 
-# Configure logging
+# Configure structured logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
-# Load environment variables first
-load_dotenv(verbose=True)  # Will show which .env file is loaded
+load_dotenv(verbose=True)
 
 class Settings(BaseSettings):
-    # Required variables
-    GEMINI_API_KEY: str = Field(
-        min_length=20,
-        description="Google Gemini API key"
-    )
+    # Google Gemini Configuration
+    GEMINI_API_KEY: str = Field(..., min_length=20)
+    GEMINI_MODEL: str = "gemini-1.5-pro"
+    GEMINI_SAFETY_SETTINGS: Optional[dict] = {
+        "HARASSMENT": "BLOCK_NONE",
+        "HATE_SPEECH": "BLOCK_NONE",
+        "SEXUAL": "BLOCK_NONE",
+        "DANGEROUS": "BLOCK_NONE"
+    }
     
-    # CORS settings (single definition)
-    ALLOWED_ORIGINS: List[str] = [
-        "http://localhost:3000",    # React/Vite default
-        "http://127.0.0.1:8000",    # FastAPI default
-        "http://127.0.0.1:5500",    # VS Code Live Server
-        "http://localhost:5500",    # Alternative Live Server
-        # Add production domains when ready:
-        # "https://yourdomain.com"
-    ]
-    
-    # Optional variables with defaults
+    # Application Configuration
     ENVIRONMENT: str = "development"
     LOG_LEVEL: str = "INFO"
     
-    # Production-specific variables (optional)
-    DATABASE_URL: Optional[str] = None
-    SENTRY_DSN: Optional[str] = None
+    # CORS Configuration
+    ALLOWED_ORIGINS: List[str] = [
+        "http://localhost:*",
+        "http://127.0.0.1:*",
+        "https://habesha-restaurant.com"
+    ]
+    
+    # Rate Limiting
+    RATE_LIMIT: str = "10/minute"
     
     @field_validator('GEMINI_API_KEY')
     def validate_api_key(cls, v):
@@ -44,13 +47,11 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = 'utf-8'
-        extra = 'ignore'  # Ignore extra env variables
+        extra = 'ignore'
 
-# Instantiate settings
 try:
     settings = Settings()
-    logger.info(f"Settings loaded for {settings.ENVIRONMENT} environment")
-    logger.debug(f"Allowed origins: {settings.ALLOWED_ORIGINS}")
+    logger.info(f"Settings loaded successfully for {settings.ENVIRONMENT}")
 except Exception as e:
-    logger.error(f"Failed to load settings: {e}")
-    raisemkd
+    logger.critical(f"Failed to load settings: {e}")
+    raise
