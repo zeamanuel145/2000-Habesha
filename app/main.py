@@ -16,26 +16,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Request model
 class ChatRequest(BaseModel):
     user_message: str
-@app.post("/")
-async def chat_endpoint(message: Message):
-    user_message = message.user_message
-    # Dummy response for testing
-    return {"bot_response": f"You said: {user_message}"}
-    @app.post("/")
-async def chatbot_endpoint(chat_request: ChatRequest):
-    user_message = chat_request.user_message
 
-    try:
-        # Example Gemini API call
-        model = genai.GenerativeModel('gemini-pro')
-        response = model.generate_content(user_message)
-        return {"bot_response": response.text.strip()}
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
+# Restaurant context for Gemini prompts
 restaurant_context = """
 You are the AI chatbot for Habesha Flavors Restaurant, based in Addis Ababa.
 
@@ -49,10 +34,11 @@ Key info you should always include:
 - Reservations: Call +251 912 838 383, book on website, or ask in chat
 - Contact: Same number above
 """
+
 @app.post("/chat")
-async def chat(request: ChatRequest):
-    user_message = request.user_message.strip() 
-    
+async def chat_endpoint(chat_request: ChatRequest):
+    user_message = chat_request.user_message.strip()
+
     if not user_message:
         raise HTTPException(status_code=400, detail="Empty message received.")
 
