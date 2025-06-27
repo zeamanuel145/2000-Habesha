@@ -461,101 +461,61 @@
     <button id="chatToggle" class="fixed bottom-5 right-5 bg-amber-800 text-white w-12 h-12 rounded-full shadow-lg hover:bg-amber-900 transition-colors z-40">
         <i class="fas fa-comment"></i>
     </button>
-
+    
     <!-- Chat Window -->
-    <div id="chatWindow" class="hidden fixed bottom-20 right-5 w-80 h-96 bg-white rounded-lg shadow-2xl z-50 flex flex-col">
-        <!-- Chat Header -->
-        <div class="bg-gray-400 text-gray-600 px-4 py-2 rounded-t-lg text-sm">
-            ChatBot UI
-        </div>
-        
-        <!-- Chat Title Bar -->
-        <div class="bg-amber-700 text-white px-4 py-3 flex justify-between items-center">
-            <h3 class="font-semibold">Chat With Us</h3>
-            <button id="closeChat" class="text-white hover:text-gray-200">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-             <!-- Chat Messaging-->
-        <div id="chatMessages" class="flex-1 bg-amber-700 p-4 overflow-y-auto space-y-3">
-            <!-- Typing Indicator -->
-            <div id="typingIndicator" class="flex items-start space-x-2 hidden">
-                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-robot text-white text-xs"></i>
-                </div>
-                <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg">
-                    <div class="flex space-x-1">
-                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div id="chatWindow" class="hidden fixed bottom-20 right-5 w-80 h-96 bg-white rounded-lg shadow-2xl z-50 flex flex-col overflow-hidden">
 
-            <!-- User Message -->
-            <div class="flex items-start space-x-2 justify-end">
-                <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg max-w-xs text-sm">
-                    What's the most popular dish?
-                </div>
-                <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-user text-white text-xs"></i>
-                </div>
-            </div>
+    <!-- Chat Header -->
+    <div class="bg-amber-700 text-white px-4 py-2 flex justify-between items-center">
+        <h3 class="font-semibold text-sm">Chat With Us</h3>
+        <button id="closeChat" class="text-white hover:text-gray-200 text-sm">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
-            <!-- Typing Indicator -->
-            <div id="typingIndicator" class="flex items-start space-x-2">
-                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-robot text-white text-xs"></i>
-                </div>
-                <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg">
-                    <div class="flex space-x-1">
-                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                    </div>
-                </div>
+    <!-- Chat Messages Scrollable Area -->
+    <div id="chatMessages" class="flex-1 p-3 overflow-y-auto space-y-3 bg-amber-50">
+        <!-- Typing Indicator (hidden by default) -->
+        <div id="typingIndicator" class="flex items-start space-x-2 hidden">
+            <div class="w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center text-white text-xs">
+                🤖
             </div>
-
-            <!-- Bot Response -->
-            <div class="flex items-start space-x-2">
-                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-robot text-white text-xs"></i>
+            <div class="bg-gray-200 px-3 py-1 rounded-lg text-sm">
+                <div class="flex space-x-1">
+                    <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
+                    <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
+                    <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
                 </div>
-                <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg max-w-xs text-sm">
-                    The house-kitfo is the most popular. A traditional dish of finely ground raw beef, seasoned with spices and served with injera.
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Reply Buttons -->
-        <div class="bg-amber-700 px-4 py-2 space-y-2">
-            <div class="flex flex-wrap gap-2">
-                <button class="quick-reply bg-amber-100 text-gray-800 px-3 py-1 rounded-full text-xs hover:bg-amber-200 transition-colors" data-message="Do you have vegan options?">
-                    Do you have vegan options?
-                </button>
-                <button class="quick-reply bg-amber-100 text-gray-800 px-3 py-1 rounded-full text-xs hover:bg-amber-200 transition-colors" data-message="Can I book a table?">
-                    Can I book a table?
-                </button>
-            </div>
-        </div>
-
-        <!-- Chat Input -->
-        <div class="bg-amber-700 p-4 rounded-b-lg size-60">
-            <div class="flex space-x-2 ">
-                <input 
-                    type="text" 
-                    id="chatInput" 
-                    placeholder="Type your question here......" 
-                    class="flex-1 bg-amber-100  text-gray-800 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
-                >
-                <button id="sendMessage" class="bg-amber-100  text-gray-800 px-3 py-2 rounded-lg hover:bg-amber-200 transition-colors">
-                    <i class="fas fa-paper-plane text-sm"></i>
-                </button>
             </div>
         </div>
     </div>
 
+    <!-- Quick Reply Buttons -->
+    <div class="bg-amber-100 px-3 py-2 flex flex-wrap gap-2">
+        <button class="quick-reply bg-amber-300 text-gray-800 px-2 py-1 rounded-full text-xs hover:bg-amber-400 transition-colors" data-message="Do you have vegan options?">
+            Vegan Options?
+        </button>
+        <button class="quick-reply bg-amber-300 text-gray-800 px-2 py-1 rounded-full text-xs hover:bg-amber-400 transition-colors" data-message="Can I book a table?">
+            Book a Table
+        </button>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="bg-amber-700 p-3 flex space-x-2">
+        <input 
+            type="text" 
+            id="chatInput" 
+            placeholder="Type your question here..." 
+            class="flex-1 bg-white px-3 py-2 rounded-lg text-sm focus:outline-none"
+        >
+        <button id="sendMessage" class="bg-white px-3 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fas fa-paper-plane text-gray-700 text-sm"></i>
+        </button>
+    </div>
+</div>
+
+
+    
     <script src="/src/script.js"></script>
 </body>
 </html>
