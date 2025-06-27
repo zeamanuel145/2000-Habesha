@@ -111,135 +111,138 @@
         });
 
 // Chatbot functionality
-class RestaurantChatbot {
-    constructor() {
-        this.chatWindow = document.getElementById('chatWindow');
-        this.chatToggle = document.getElementById('chatToggle');
-        this.closeChat = document.getElementById('closeChat');
-        this.chatMessages = document.getElementById('chatMessages');
-        this.chatInput = document.getElementById('chatInput');
-        this.sendMessage = document.getElementById('sendMessage');
-        this.typingIndicator = document.getElementById('typingIndicator');
-        this.quickReplyButtons = document.querySelectorAll('.quick-reply');
-
-        this.isOpen = false;
-        this.isTyping = false;
-
-        this.initializeEventListeners();
-        this.hideTypingIndicator();
-    }
-
-    initializeEventListeners() {
-        this.chatToggle.addEventListener('click', () => this.toggleChat());
-        this.closeChat.addEventListener('click', () => this.toggleChat());
-
-        this.sendMessage.addEventListener('click', () => this.handleSendMessage());
-        this.chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.handleSendMessage();
-            }
-        });
-
-        this.quickReplyButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const message = button.getAttribute('data-message');
-                this.sendUserMessage(message);
-                this.handleBotResponse(message);
+document.addEventListener("DOMContentLoaded", function() {
+    class RestaurantChatbot {
+        constructor() {
+            this.chatWindow = document.getElementById('chatWindow');
+            this.chatToggle = document.getElementById('chatToggle');
+            this.closeChat = document.getElementById('closeChat');
+            this.chatMessages = document.getElementById('chatMessages');
+            this.chatInput = document.getElementById('chatInput');
+            this.sendMessage = document.getElementById('sendMessage');
+            this.typingIndicator = document.getElementById('typingIndicator');
+            this.quickReplyButtons = document.querySelectorAll('.quick-reply');
+    
+            this.isOpen = false;
+            this.isTyping = false;
+    
+            this.initializeEventListeners();
+            this.hideTypingIndicator();
+        }
+    
+        initializeEventListeners() {
+            this.chatToggle.addEventListener('click', () => this.toggleChat());
+            this.closeChat.addEventListener('click', () => this.toggleChat());
+    
+            this.sendMessage.addEventListener('click', () => this.handleSendMessage());
+            this.chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.handleSendMessage();
+                }
             });
-        });
-    }
-
-    toggleChat() {
-        this.isOpen = !this.isOpen;
-        if (this.isOpen) {
-            this.chatWindow.classList.remove('hidden');
-            this.chatInput.focus();
-        } else {
-            this.chatWindow.classList.add('hidden');
+    
+            this.quickReplyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const message = button.getAttribute('data-message');
+                    this.sendUserMessage(message);
+                    this.handleBotResponse(message);
+                });
+            });
+        }
+    
+        toggleChat() {
+            this.isOpen = !this.isOpen;
+            if (this.isOpen) {
+                this.chatWindow.classList.remove('hidden');
+                this.chatInput.focus();
+            } else {
+                this.chatWindow.classList.add('hidden');
+            }
+        }
+    
+        handleSendMessage() {
+            const message = this.chatInput.value.trim();
+            if (message) {
+                this.sendUserMessage(message);
+                this.chatInput.value = '';
+                this.handleBotResponse(message);
+            }
+        }
+    
+        sendUserMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'flex items-start space-x-2 justify-end';
+            messageElement.innerHTML = `
+                <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg max-w-xs text-sm">
+                    ${message}
+                </div>
+                <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-user text-white text-xs"></i>
+                </div>
+            `;
+            this.chatMessages.appendChild(messageElement);
+            this.scrollToBottom();
+        }
+    
+        handleBotResponse(userMessage) {
+            this.showTypingIndicator();
+    
+            fetch('https://two000-habesha.onrender.com', {  
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.hideTypingIndicator();
+                this.sendBotMessage(data.bot_response);
+            })
+            .catch(error => {
+                this.hideTypingIndicator();
+                this.sendBotMessage("Sorry! Something went wrong. Please try again later.");
+                console.error('Error:', error);
+            });
+        }
+    
+        sendBotMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'flex items-start space-x-2';
+            messageElement.innerHTML = `
+                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-robot text-white text-xs"></i>
+                </div>
+                <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg max-w-xs text-sm">
+                    ${message}
+                </div>
+            `;
+            this.chatMessages.appendChild(messageElement);
+            this.scrollToBottom();
+        }
+    
+        showTypingIndicator() {
+            this.typingIndicator.classList.remove('hidden');
+            this.isTyping = true;
+            this.scrollToBottom();
+        }
+    
+        hideTypingIndicator() {
+            this.typingIndicator.classList.add('hidden');
+            this.isTyping = false;
+        }
+    
+        scrollToBottom() {
+            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
         }
     }
-
-    handleSendMessage() {
-        const message = this.chatInput.value.trim();
-        if (message) {
-            this.sendUserMessage(message);
-            this.chatInput.value = '';
-            this.handleBotResponse(message);
-        }
+    
+    // Initialize chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeChatbot();
+    });
+    function initializeChatbot() {
+        new RestaurantChatbot();
     }
-
-    sendUserMessage(message) {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'flex items-start space-x-2 justify-end';
-        messageElement.innerHTML = `
-            <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg max-w-xs text-sm">
-                ${message}
-            </div>
-            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-user text-white text-xs"></i>
-            </div>
-        `;
-        this.chatMessages.appendChild(messageElement);
-        this.scrollToBottom();
-    }
-
-    handleBotResponse(userMessage) {
-        this.showTypingIndicator();
-
-        fetch('https://two000-habesha.onrender.com', {  
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ user_message: userMessage })
-        })
-        .then(response => response.json())
-        .then(data => {
-            this.hideTypingIndicator();
-            this.sendBotMessage(data.bot_response);
-        })
-        .catch(error => {
-            this.hideTypingIndicator();
-            this.sendBotMessage("Sorry! Something went wrong. Please try again later.");
-            console.error('Error:', error);
-        });
-    }
-
-    sendBotMessage(message) {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'flex items-start space-x-2';
-        messageElement.innerHTML = `
-            <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-robot text-white text-xs"></i>
-            </div>
-            <div class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg max-w-xs text-sm">
-                ${message}
-            </div>
-        `;
-        this.chatMessages.appendChild(messageElement);
-        this.scrollToBottom();
-    }
-
-    showTypingIndicator() {
-        this.typingIndicator.classList.remove('hidden');
-        this.isTyping = true;
-        this.scrollToBottom();
-    }
-
-    hideTypingIndicator() {
-        this.typingIndicator.classList.add('hidden');
-        this.isTyping = false;
-    }
-
-    scrollToBottom() {
-        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-    }
-}
-
-// Initialize chatbot
-document.addEventListener('DOMContentLoaded', function() {
-    initializeChatbot();
 });
-function initializeChatbot() {
-    new RestaurantChatbot();
-}
+
