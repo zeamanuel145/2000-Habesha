@@ -121,48 +121,34 @@ class RestaurantChatbot {
         this.sendMessage = document.getElementById('sendMessage');
         this.typingIndicator = document.getElementById('typingIndicator');
         this.quickReplyButtons = document.querySelectorAll('.quick-reply');
-        
+
         this.isOpen = false;
         this.isTyping = false;
-        
+
         this.initializeEventListeners();
         this.hideTypingIndicator();
-        
-        // Predefined responses
-        this.responses = {
-            'vegan': 'Yes! We have several vegan options including Shiro (chickpea stew), Gomen (collard greens), and our Vegetarian Combo platter. All served with traditional injera bread.',
-            'reservation': 'I\'d be happy to help you book a table! You can make a reservation by clicking the "Reserve" button on our website, calling us at ‪+251 912 838 383‬, or I can guide you through the process right here.',
-            'menu': 'Our menu features authentic Ethiopian cuisine including Kitfo, Doro Wat, Tibs, and many vegetarian options. Would you like to know about any specific dish?',
-            'hours': 'We\'re open every day from 10AM to 11PM. We also feature live cultural performances in the evenings!',
-            'location': 'We\'re located in Addis Ababa, on Namibia Street, Bole Atlas, around Ethiopian Skylight Hotel.',
-            'popular': 'The house-kitfo is the most popular. A traditional dish of finely ground raw beef, seasoned with spices and served with injera.',
-            'default': 'I\'m here to help! You can ask me about our menu, make reservations, learn about our vegan options, or get information about our location and hours.'
-        };
     }
-    
+
     initializeEventListeners() {
-        // Toggle chat window
         this.chatToggle.addEventListener('click', () => this.toggleChat());
         this.closeChat.addEventListener('click', () => this.toggleChat());
-        
-        // Send message
+
         this.sendMessage.addEventListener('click', () => this.handleSendMessage());
         this.chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.handleSendMessage();
             }
         });
-        
-        // Quick reply buttons
+
         this.quickReplyButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const message = button.getAttribute('data-message');
                 this.sendUserMessage(message);
                 this.handleBotResponse(message);
             });
-  });
+        });
     }
-    
+
     toggleChat() {
         this.isOpen = !this.isOpen;
         if (this.isOpen) {
@@ -172,7 +158,7 @@ class RestaurantChatbot {
             this.chatWindow.classList.add('hidden');
         }
     }
-    
+
     handleSendMessage() {
         const message = this.chatInput.value.trim();
         if (message) {
@@ -181,7 +167,8 @@ class RestaurantChatbot {
             this.handleBotResponse(message);
         }
     }
-sendUserMessage(message) {
+
+    sendUserMessage(message) {
         const messageElement = document.createElement('div');
         messageElement.className = 'flex items-start space-x-2 justify-end';
         messageElement.innerHTML = `
@@ -192,40 +179,32 @@ sendUserMessage(message) {
                 <i class="fas fa-user text-white text-xs"></i>
             </div>
         `;
-        
         this.chatMessages.appendChild(messageElement);
         this.scrollToBottom();
     }
-    
+
     handleBotResponse(userMessage) {
         this.showTypingIndicator();
-        
-        // Simulate typing delay
-        setTimeout(() => {
+
+        fetch('https://two000-habesha.onrender.com', {  
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user_message: userMessage })
+        })
+        .then(response => response.json())
+        .then(data => {
             this.hideTypingIndicator();
-            const response = this.getBotResponse(userMessage.toLowerCase());
-            this.sendBotMessage(response);
-        }, 1500);
+            this.sendBotMessage(data.bot_response);
+        })
+        .catch(error => {
+            this.hideTypingIndicator();
+            this.sendBotMessage("Sorry! Something went wrong. Please try again later.");
+            console.error('Error:', error);
+        });
     }
-    
-    getBotResponse(message) {
-        if (message.includes('vegan') || message.includes('vegetarian')) {
-            return this.responses.vegan;
-        } else if (message.includes('book') || message.includes('reservation') || message.includes('table')) {
-            return this.responses.reservation;
-        } else if (message.includes('menu') || message.includes('food') || message.includes('dish')) {
-            return this.responses.menu;
-        } else if (message.includes('hours') || message.includes('open') || message.includes('time')) {
-            return this.responses.hours;
-        } else if (message.includes('location') || message.includes('address') || message.includes('where')) {
-            return this.responses.location;
-        } else if (message.includes('popular') || message.includes('recommend') || message.includes('best')) {
-            return this.responses.popular;
-        } else {
-            return this.responses.default;
-        }
-    }
-    
+
     sendBotMessage(message) {
         const messageElement = document.createElement('div');
         messageElement.className = 'flex items-start space-x-2';
@@ -237,22 +216,21 @@ sendUserMessage(message) {
                 ${message}
             </div>
         `;
-        
         this.chatMessages.appendChild(messageElement);
         this.scrollToBottom();
     }
-    
+
     showTypingIndicator() {
         this.typingIndicator.classList.remove('hidden');
         this.isTyping = true;
-this.scrollToBottom();
+        this.scrollToBottom();
     }
-    
+
     hideTypingIndicator() {
         this.typingIndicator.classList.add('hidden');
         this.isTyping = false;
     }
-    
+
     scrollToBottom() {
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
