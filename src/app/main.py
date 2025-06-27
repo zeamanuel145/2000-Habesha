@@ -4,10 +4,12 @@ from pydantic import BaseModel
 import google.generativeai as genai
 from app.config import settings
 
-genai.configure(api_key=settings.GOOGLE_API_KEY)
+# Configure Gemini API
+genai.configure(api_key=settings.GEMINI_API_KEY)
 
 app = FastAPI()
 
+# Allow CORS for testing from anywhere
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,6 +18,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Test GET route to avoid 404 in browser
+@app.get("/")
+def root():
+    return {"message": "Habesha Flavors Chatbot is running"}
+
+# Pydantic model for incoming request
+class ChatRequest(BaseModel):
+    user_message: str
+
+# Restaurant context for Gemini prompt
 restaurant_context = """
 You are the AI chatbot for Habesha Flavors Restaurant, based in Addis Ababa.
 
@@ -30,12 +42,10 @@ Key info you should always include:
 - Contact: Same number above
 """
 
-class ChatRequest(BaseModel):
-    user_message: str
-
+# POST endpoint for chatbot
 @app.post("/chat")
-async def chatbot_endpoint(chat_request: ChatRequest):
-    user_message = chat_request.user_message.strip()
+async def chat(request: ChatRequest):
+    user_message = request.user_message.strip()
 
     if not user_message:
         raise HTTPException(status_code=400, detail="Empty message received.")
