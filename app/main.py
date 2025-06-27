@@ -4,23 +4,18 @@ from pydantic import BaseModel
 import google.generativeai as genai
 from app.config import settings
 
-genai.configure(api_key=settings.GEMINI_API_KEY)
+genai.configure(api_key=settings.GOOGLE_API_KEY)
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Request model
-class ChatRequest(BaseModel):
-    user_message: str
-
-# Restaurant context for Gemini prompts
 restaurant_context = """
 You are the AI chatbot for Habesha Flavors Restaurant, based in Addis Ababa.
 
@@ -35,8 +30,11 @@ Key info you should always include:
 - Contact: Same number above
 """
 
+class ChatRequest(BaseModel):
+    user_message: str
+
 @app.post("/chat")
-async def chat_endpoint(chat_request: ChatRequest):
+async def chatbot_endpoint(chat_request: ChatRequest):
     user_message = chat_request.user_message.strip()
 
     if not user_message:
