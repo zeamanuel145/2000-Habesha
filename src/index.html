@@ -1,521 +1,1003 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2000 Habesha Cultural Restaurant</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        coffee: '#80654D',
-                        cream: '#F6F1E7',
-                        'ethiopian-brown': '#8B4513',
-                        'ethiopian-gold': '#DAA520'
-                    },
-                    backgroundImage: {
-                        'coffee-gradient': 'linear-gradient(to bottom, #80654D, #F6F1E7,#FAF8F3)',
-                        'cream-gradient':   'linear-gradient(to bottom, #FAF8F3,#ffff)'
-                    },
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              coffee: "#80654D",
+              cream: "#F6F1E7",
+              "ethiopian-brown": "#8B4513",
+              "ethiopian-gold": "#DAA520",
+            },
+            backgroundImage: {
+              "coffee-gradient":
+                "linear-gradient(to bottom, #80654D, #F6F1E7,#FAF8F3)",
+              "cream-gradient": "linear-gradient(to bottom, #FAF8F3,#ffff)",
+            },
+          },
+        },
+      };
     </script>
+<<<<<<< HEAD
+  </head>
+  <body class="bg-gray-50">
+=======
 </head>
 <script src="./src/script.js"></script>
 <body class="bg-gray-50">
+>>>>>>> a4778b855af9f7c5947e4386c9a08a2cad6e6fc1
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-2">
-                <img src="/asset/img/logo.jpg" alt="" class="h-10 w-10">
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-amber-800 transition-colors">Home</a>
-                    <a href="#menu" class="text-gray-700 hover:text-amber-800 transition-colors">Menu</a>
-                    <a href="#story" class="text-gray-700 hover:text-amber-800 transition-colors">Our Story</a>
-                    <a href="#feedback" class="text-gray-700 hover:text-amber-800 transition-colors">Feedback</a>
-                    <a href="#contact" class="text-gray-700 hover:text-amber-800 transition-colors">Contact</a>
-                </div>
-                <button onclick="openReservationModal()" class="bg-amber-800 text-white px-6 py-2 rounded-lg hover:bg-amber-900 transition-colors">
-                    Reserve
-                </button>
+    <nav
+      class="bg-gradient-to-l from-white to-amber-800 shadow-lg fixed w-full top-0 z-50"
+    >
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-2">
+            <img
+              src="/asset/img/logo.jpg"
+              alt=""
+              class="w-10 h-10 rounded-full object-cover"
+            />
+          </div>
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="#home"
+              class="text-gray-700 hover:text-amber-800 transition-colors"
+              >Home</a
+            >
+            <button
+              id="mainmenu"
+              href="javascript:void(0);"
+              class="text-gray-700 hover:text-amber-800 transition-colors"
+              onclick="document.getElementById('submenu1').classList.toggle('hidden')"
+            >
+              Menu
+            </button>
+            <div
+              id="submenu1"
+              class="absolute top-full m-2 bg-white dark:bg-gray-800 dark:text-white rounded shadow-lg hidden"
+            >
+              <a
+                href="#mainBtn"
+                class="block px-4 py-2 text-amber-800 bg-white"
+                onclick="showMenu('main')"
+                >Food</a
+              >
+              <hr />
+              <a
+                href="#drinksBtn"
+                class="block px-4 py-2 text-amber-800 bg-white"
+                onclick="showMenu('drinks')"
+                >Drink</a
+              >
             </div>
+            <a
+              href="#story"
+              class="text-gray-700 hover:text-amber-800 transition-colors"
+              >Our Story</a
+            >
+            <a
+              href="#feedback"
+              class="text-gray-700 hover:text-amber-800 transition-colors"
+              >Feedback</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-700 hover:text-amber-800 transition-colors"
+              >Contact</a
+            >
+          </div>
+          <button
+            onclick="openReservationModal()"
+            class="hidden md:flex bg-amber-800 text-white px-6 py-2 rounded-lg hover:bg-amber-900 transition-colors"
+          >
+            Reserve
+          </button>
+          <div>
+            <button
+              id="mobileMenu"
+              class="text-3xl sm:hidden focus:outline-none text-black"
+              onclick="document.getElementById('mob-nav').classList.toggle('hidden')"
+            >
+              &#9776;
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Navigation section for mobile -->
+
+      <div id="mob-nav" class="hidden">
+        <ul class="list-none text-center">
+          <li>
+            <a
+              href="#home"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+              >Home</a
+            >
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#featuredBtn"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+            >
+              Menu
+            </a>
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#story"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+              >Our Story</a
+            >
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#feedback"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl"
+              >Feedback</a
+            >
+          </li>
+          <hr />
+          <li>
+            <a
+              href="#contact"
+              class="text-gray-700 hover:text-amber-800 transition-colors p-4 text-xl mb-4"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center text-center text-white pt-16">
-        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-        <img src="/asset/img/people_dac.jpg" alt="Ethiopian Cultural Performance" class="absolute inset-0 w-full h-full object-cover">
-        <div class="relative z-10 max-w-4xl mx-auto px-4">
-            <p class="text-2xl font-extrabold mb-4">Welcome to</p>
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">2000 Habesha Cultural Restaurant</h1>
-            <p class="text-xl mb-8">Authentic Ethiopian Experience in the Heart of Addis Ababa</p>
-            <div class="space-x-4">
-                <button onclick="openReservationModal()" class="bg-amber-800 text-white px-8 py-3 rounded-lg hover:bg-amber-900 transition-colors">
-                    Reserve a Table
-                </button>
-                <button onclick="document.getElementById('menu').scrollIntoView()" class="border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-800 transition-colors">
-                    Browse Menu
-                </button>
-            </div>
+    <section
+      id="home"
+      class="relative h-screen flex items-center justify-center text-center text-white pt-16"
+    >
+      <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+      <img
+        src="/asset/img/people_dac.jpg"
+        alt="Ethiopian Cultural Performance"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="relative z-10 max-w-4xl mx-auto px-4">
+        <p class="text-2xl font-extrabold mb-4">Welcome to</p>
+        <h1 class="text-5xl md:text-6xl font-bold mb-6">
+          2000 Habesha Cultural Restaurant
+        </h1>
+        <p class="text-xl mb-8">
+          Authentic Ethiopian Experience in the Heart of Addis Ababa
+        </p>
+        <div class="space-x-4">
+          <button
+            onclick="openReservationModal()"
+            class="bg-amber-800 text-white px-8 py-3 rounded-lg hover:bg-amber-900 transition-colors"
+          >
+            Reserve a Table
+          </button>
+          <button
+            onclick="document.getElementById('menu').scrollIntoView()"
+            class="border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-800 transition-colors"
+          >
+            Browse Menu
+          </button>
         </div>
+      </div>
     </section>
     <!-- our story -->
     <section id="story" class="py-16 bg-coffee-gradient">
-      
-      <div class="max-w-7xl mx-auto px-4" >
+      <div class="max-w-7xl mx-auto px-4">
         <!-- first layer -->
-        <div class="  grid md:grid-cols-2 ">
+        <div class="grid md:grid-cols-2">
           <div>
-            <h2 class="text-4xl font-bold text-amber-800 mb-12 text-center">Our Story</h2>
+            <h2 class="text-4xl font-bold text-amber-800 mb-12 text-center">
+              Our Story
+            </h2>
             <p class="text-gray-700 text-lg w-3xl">
-                        Our journey began in the heart of Addis Ababa, where family recipes have been passed down through generations. We are inspired by our vision. We built this space to offer more than traditional and modern Ethiopian cultural heritage.
-                    </p>
+              Our journey began in the heart of Addis Ababa, where family
+              recipes have been passed down through generations. We are inspired
+              by our vision. We built this space to offer more than traditional
+              and modern Ethiopian cultural heritage.
+            </p>
           </div>
           <div class>
-              <div class=" flex items-center space-y-4">
-                        <img src="/asset/img/masiko.jpg" alt="Restaurant Interior" class="rounded-lg w-full h-60 object-cover shadow-lg">
-                        <img src="/asset/img/agelgle.jpg" alt="Traditional Coffee Ceremony" class="rounded-lg w-full h-48 object-cover shadow-lg">
-                </div>
-
+            <div class="flex items-center space-y-4">
+              <img
+                src="/asset/img/masiko.jpg"
+                alt="Restaurant Interior"
+                class="rounded-lg w-full h-60 object-cover shadow-lg"
+              />
+              <img
+                src="/asset/img/agelgle.jpg"
+                alt="Traditional Coffee Ceremony"
+                class="rounded-lg w-full h-48 object-cover shadow-lg"
+              />
+            </div>
           </div>
-
         </div>
         <!-- second layer -->
-      <div class="grid grid-cols-2 gap-4 ">
-         <div>
-            <img src="/asset/img/tradishinal_place.jpg" alt="Cultural Performance" class="rounded-lg w-full h-60 object-cover shadow-lg">
-
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <img
+              src="/asset/img/tradishinal_place.jpg"
+              alt="Cultural Performance"
+              class="rounded-lg w-full h-60 object-cover shadow-lg"
+            />
           </div>
-        <div>
-          <h3 class="text-xl font-bold text-amber-800 pt-8 mb-4">What Makes Us Unique:</h3>
+          <div>
+            <h3 class="text-xl font-bold text-amber-800 pt-8 mb-4">
+              What Makes Us Unique:
+            </h3>
             <p class="text-gray-700 leading-relaxed">
-              At 2000 Habesha, we offer more than a meal – we deliver an authentic Ethiopian cultural journey. From homemade injera and locally sourced spices to communal dining in traditional mesob baskets, every visit immerses you in our heritage. As night falls, live music and dance performances transport you to the heart of Ethiopian culture, making every guest feel like part of our extended family.
-              </p>
+              At 2000 Habesha, we offer more than a meal – we deliver an
+              authentic Ethiopian cultural journey. From homemade injera and
+              locally sourced spices to communal dining in traditional mesob
+              baskets, every visit immerses you in our heritage. As night falls,
+              live music and dance performances transport you to the heart of
+              Ethiopian culture, making every guest feel like part of our
+              extended family.
+            </p>
           </div>
-         
-
+        </div>
       </div>
-        
-        
-      </div>
- </section>
+    </section>
     <!-- Menu Section -->
     <section id="menu" class="py-16 bg-gray-50 bg-cream-gradient">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-4xl font-bold text-amber-800" id="menuTitle">Featured Dishes</h2>
-                <button class="bg-amber-800 text-white px-4 py-2 rounded-lg hover:bg-amber-900 transition-colors">
-                    Download PDF
-                </button>
-            </div>
-            
-            <!-- Menu Filter -->
-            <div class="flex flex-wrap gap-4 mb-8">
-                <button onclick="showMenu('featured')" id="featuredBtn" class="bg-amber-800 text-white px-6 py-2 rounded-lg transition-colors">Featured</button>
-                <button onclick="showMenu('main')" id="mainBtn" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors">Main Dishes</button>
-                <button onclick="showMenu('drinks')" id="drinksBtn" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors">Drinks</button>
-            </div>
-
-            <!-- Featured Dishes -->
-            <div id="featuredMenu" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/kitfo2.jpg" alt="Kitfo" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Kitfo - 180 Br</h3>
-                        <p class="text-gray-600">Ethiopian steak tartare seasoned with mitmita and served with ayib</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/doro.jpg" alt="Doro Wat" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Doro Wat - 200 Br</h3>
-                        <p class="text-gray-600">Traditional chicken stew with berbere spice and hard-boiled eggs</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/tbs.jpg" alt="Tibs" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Tibs - 150 Br</h3>
-                        <p class="text-gray-600">Sautéed beef with onions, peppers, and Ethiopian spices</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/beye_aynet.jpg" alt="Injera Combo" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Injera Combo - 250 Br</h3>
-                        <p class="text-gray-600">Traditional platter with various stews served on injera bread</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/shiro.jpg" alt="Shiro" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Shiro - 120 Br</h3>
-                        <p class="text-gray-600">Ground chickpea stew with berbere and Ethiopian spices</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/agelgle.jpg" alt="Gomen" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Gomen - 100 Br</h3>
-                        <p class="text-gray-600">Collard greens sautéed with garlic, ginger, and spices</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main Dishes -->
-            <div id="mainMenu" class="hidden md:grid-cols-2 lg:grid-cols-3 grid gap-8">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/tbs.jpg" alt="Beef Tibs" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Beef Tibs - 180 Br</h3>
-                        <p class="text-gray-600">Tender beef cubes sautéed with onions and peppers</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/tbs.jpg" alt="Lamb Tibs" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Lamb Tibs - 220 Br</h3>
-                        <p class="text-gray-600">Succulent lamb pieces with traditional Ethiopian seasonings</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/koba.jpg" alt="Fish Gulash" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Fish Gulash - 160 Br</h3>
-                        <p class="text-gray-600">Fresh fish cooked in spicy tomato-based sauce</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/beye_aynet.jpg" alt="Vegetarian Combo" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Vegetarian Combo - 140 Br</h3>
-                        <p class="text-gray-600">Assorted vegetarian dishes served with injera</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/doro.jpg" alt="Chicken Tibs" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Chicken Tibs - 170 Br</h3>
-                        <p class="text-gray-600">Grilled chicken pieces with Ethiopian spice blend</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/sga_aynet.jpg" alt="Mixed Grill" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Mixed Grill - 280 Br</h3>
-                        <p class="text-gray-600">Combination of beef, lamb, and chicken tibs</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Drinks -->
-            <div id="drinksMenu" class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/placeholder.svg?height=200&width=300" alt="Ethiopian Coffee" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Ethiopian Coffee - 25 Br</h3>
-                        <p class="text-gray-600">Traditional coffee ceremony with freshly roasted beans</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/tej.jpg" alt="Tej" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Tej (Honey Wine) - 80 Br</h3>
-                        <p class="text-gray-600">Traditional Ethiopian honey wine served in berele</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/wine.jpg" alt="Fresh Juice" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Wine- 35 Br</h3>
-                        <p class="text-gray-600">Freshly squeezed Grape, yest, or somethings i do not know  </p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/tella.jpg" alt="Tella" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Tella - 45 Br</h3>
-                        <p class="text-gray-600">Traditional Ethiopian beer made from barley</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/Amboha.jpg" alt="Soft Drinks" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Amboha - 20 Br</h3>
-                        <p class="text-gray-600">Ethiopian local sparkling water</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                    <img src="/asset/img/water.jpg" alt="Tea" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 text-amber-800">Ethiopian Water - 15 Br</h3>
-                        <p class="text-gray-600">any Water</p>
-                    </div>
-                </div>
-            </div>
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-4xl font-bold text-amber-800" id="menuTitle">
+            Featured Dishes
+          </h2>
+          <button
+            class="bg-amber-800 text-white px-4 py-2 rounded-lg hover:bg-amber-900 transition-colors"
+          >
+            Download PDF
+          </button>
         </div>
+
+        <!-- Menu Filter -->
+        <div class="flex flex-wrap gap-4 mb-8">
+          <button
+            onclick="showMenu('featured')"
+            id="featuredBtn"
+            class="bg-amber-800 text-white px-6 py-2 rounded-lg transition-colors"
+          >
+            Featured
+          </button>
+          <button
+            onclick="showMenu('main')"
+            id="mainBtn"
+            class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            Main Dishes
+          </button>
+          <button
+            onclick="showMenu('drinks')"
+            id="drinksBtn"
+            class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            Drinks
+          </button>
+        </div>
+
+        <!-- Featured Dishes -->
+        <div id="featuredMenu" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/kitfo2.jpg"
+              alt="Kitfo"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Kitfo - 180 Br
+              </h3>
+              <p class="text-gray-600">
+                Ethiopian steak tartare seasoned with mitmita and served with
+                ayib
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/doro.jpg"
+              alt="Doro Wat"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Doro Wat - 200 Br
+              </h3>
+              <p class="text-gray-600">
+                Traditional chicken stew with berbere spice and hard-boiled eggs
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/tbs.jpg"
+              alt="Tibs"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Tibs - 150 Br
+              </h3>
+              <p class="text-gray-600">
+                Sautéed beef with onions, peppers, and Ethiopian spices
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/beye_aynet.jpg"
+              alt="Injera Combo"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Injera Combo - 250 Br
+              </h3>
+              <p class="text-gray-600">
+                Traditional platter with various stews served on injera bread
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/shiro.jpg"
+              alt="Shiro"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Shiro - 120 Br
+              </h3>
+              <p class="text-gray-600">
+                Ground chickpea stew with berbere and Ethiopian spices
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/agelgle.jpg"
+              alt="Gomen"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Gomen - 100 Br
+              </h3>
+              <p class="text-gray-600">
+                Collard greens sautéed with garlic, ginger, and spices
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Dishes -->
+        <div
+          id="mainMenu"
+          class="hidden md:grid-cols-2 lg:grid-cols-3 grid gap-8"
+        >
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/tbs.jpg"
+              alt="Beef Tibs"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Beef Tibs - 180 Br
+              </h3>
+              <p class="text-gray-600">
+                Tender beef cubes sautéed with onions and peppers
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/tbs.jpg"
+              alt="Lamb Tibs"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Lamb Tibs - 220 Br
+              </h3>
+              <p class="text-gray-600">
+                Succulent lamb pieces with traditional Ethiopian seasonings
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/koba.jpg"
+              alt="Fish Gulash"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Fish Gulash - 160 Br
+              </h3>
+              <p class="text-gray-600">
+                Fresh fish cooked in spicy tomato-based sauce
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/beye_aynet.jpg"
+              alt="Vegetarian Combo"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Vegetarian Combo - 140 Br
+              </h3>
+              <p class="text-gray-600">
+                Assorted vegetarian dishes served with injera
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/doro.jpg"
+              alt="Chicken Tibs"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Chicken Tibs - 170 Br
+              </h3>
+              <p class="text-gray-600">
+                Grilled chicken pieces with Ethiopian spice blend
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/sga_aynet.jpg"
+              alt="Mixed Grill"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Mixed Grill - 280 Br
+              </h3>
+              <p class="text-gray-600">
+                Combination of beef, lamb, and chicken tibs
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drinks -->
+        <div
+          id="drinksMenu"
+          class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/coffee.jpg"
+              alt="Ethiopian Coffee"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Ethiopian Coffee - 25 Br
+              </h3>
+              <p class="text-gray-600">
+                Traditional coffee ceremony with freshly roasted beans
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/tej.jpg"
+              alt="Tej"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Tej (Honey Wine) - 80 Br
+              </h3>
+              <p class="text-gray-600">
+                Traditional Ethiopian honey wine served in berele
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/wine.jpg"
+              alt="Fresh Juice"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">Wine- 35 Br</h3>
+              <p class="text-gray-600">
+                Freshly squeezed Grape, yest, or somethings i do not know
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/tella.jpg"
+              alt="Tella"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Tella - 45 Br
+              </h3>
+              <p class="text-gray-600">
+                Traditional Ethiopian beer made from barley
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/Amboha.jpg"
+              alt="Soft Drinks"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Amboha - 20 Br
+              </h3>
+              <p class="text-gray-600">Ethiopian local sparkling water</p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <img
+              src="/asset/img/water.jpg"
+              alt="Tea"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-amber-800">
+                Ethiopian Water - 15 Br
+              </h3>
+              <p class="text-gray-600">any Water</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Testimonials and Feedback Section -->
     <section id="feedback" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-12">
-                <!-- Testimonials -->
-                <div>
-                    <h2 class="text-4xl font-bold text-amber-800 mb-8">Testimonials and Feedbacks</h2>
-                    <div class="space-y-6">
-                        <div class="bg-gray-100 p-6 rounded-lg">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 bg-gray-400 rounded-full mr-4 flex items-center justify-center">
-                                    <i class="fas fa-user text-white"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold">Christina Meetoo</h4>
-                                    <div class="flex text-yellow-400 text-sm">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <span class="text-sm text-gray-500">3 months ago</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-700">Nice experience for a new book to discover Ethiopian food, music and dance. The show was great with excellent musicians, singers and dancers. The dancers are very impressive. The restaurant is spacious and you can even join the stage to dance at some point... Read More</p>
-                        </div>
-                        
-                        <div class="bg-gray-100 p-6 rounded-lg">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 bg-gray-400 rounded-full mr-4 flex items-center justify-center">
-                                    <i class="fas fa-user text-white"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold">Christina Meetoo</h4>
-                                    <div class="flex text-yellow-400 text-sm">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star text-gray-300"></i>
-                                    </div>
-                                    <span class="text-sm text-gray-500">5 months ago</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-700">Nice experience for a new book to discover Ethiopian food, music and dance. The show was great with excellent musicians, singers and dancers. The dancers are very impressive. The restaurant is spacious and you can even join the stage to dance at some point... Read More</p>
-                        </div>
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-12">
+          <!-- Testimonials -->
+          <div>
+            <h2 class="text-4xl font-bold text-amber-800 mb-8">
+              Testimonials and Feedbacks
+            </h2>
+            <div class="space-y-6">
+              <div class="bg-gray-100 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-gray-400 rounded-full mr-4 flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-white"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold">Christina Meetoo</h4>
+                    <div class="flex text-yellow-400 text-sm">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
                     </div>
+                    <span class="text-sm text-gray-500">3 months ago</span>
+                  </div>
                 </div>
+                <p class="text-gray-700">
+                  Nice experience for a new book to discover Ethiopian food,
+                  music and dance. The show was great with excellent musicians,
+                  singers and dancers. The dancers are very impressive. The
+                  restaurant is spacious and you can even join the stage to
+                  dance at some point... Read More
+                </p>
+              </div>
 
-                <!-- Feedback Form -->
-                <div class="bg-amber-100 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-amber-800 mb-6">We'd love your feedback</h3>
-                    <form id="feedbackForm" class="space-y-4">
-                        <div>
-                            <label class="block text-gray-700 mb-2">Full Name:</label>
-                            <input type="text" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Enter your name">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Email:</label>
-                            <input type="email" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Enter your email address">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Rate your Experience:</label>
-                            <div class="flex gap-1" id="userRating">
-                                <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="1"></i>
-                                <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="2"></i>
-                                <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="3"></i>
-                                <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="4"></i>
-                                <i class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors" data-rating="5"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Message:</label>
-                            <textarea class="w-full p-3 border rounded-lg h-32 focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Write your message here..."></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-amber-800 text-white py-3 rounded-lg hover:bg-amber-900 transition-colors">
-                            Submit
-                        </button>
-                    </form>
+              <div class="bg-gray-100 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-gray-400 rounded-full mr-4 flex items-center justify-center"
+                  >
+                    <i class="fas fa-user text-white"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold">Christina Meetoo</h4>
+                    <div class="flex text-yellow-400 text-sm">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star text-gray-300"></i>
+                    </div>
+                    <span class="text-sm text-gray-500">5 months ago</span>
+                  </div>
                 </div>
+                <p class="text-gray-700">
+                  Nice experience for a new book to discover Ethiopian food,
+                  music and dance. The show was great with excellent musicians,
+                  singers and dancers. The dancers are very impressive. The
+                  restaurant is spacious and you can even join the stage to
+                  dance at some point... Read More
+                </p>
+              </div>
             </div>
+          </div>
+
+          <!-- Feedback Form -->
+          <div class="bg-amber-100 p-8 rounded-lg">
+            <h3 class="text-2xl font-bold text-amber-800 mb-6">
+              We'd love your feedback
+            </h3>
+            <form id="feedbackForm" class="space-y-4">
+              <div>
+                <label class="block text-gray-700 mb-2">Full Name:</label>
+                <input
+                  type="text"
+                  class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-2">Email:</label>
+                <input
+                  type="email"
+                  class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  placeholder="Enter your email address"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-2"
+                  >Rate your Experience:</label
+                >
+                <div class="flex gap-1" id="userRating">
+                  <i
+                    class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors"
+                    data-rating="1"
+                  ></i>
+                  <i
+                    class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors"
+                    data-rating="2"
+                  ></i>
+                  <i
+                    class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors"
+                    data-rating="3"
+                  ></i>
+                  <i
+                    class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors"
+                    data-rating="4"
+                  ></i>
+                  <i
+                    class="fas fa-star text-2xl text-gray-300 cursor-pointer hover:text-yellow-400 transition-colors"
+                    data-rating="5"
+                  ></i>
+                </div>
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-2">Message:</label>
+                <textarea
+                  class="w-full p-3 border rounded-lg h-32 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  placeholder="Write your message here..."
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-amber-800 text-white py-3 rounded-lg hover:bg-amber-900 transition-colors"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </section>
-    <section> 
-      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d8680.49562191721!2d38.780235794644156!3d9.006333055163887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2set!4v1750943454124!5m2!1sen!2set"
+    <section>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d8680.49562191721!2d38.780235794644156!3d9.006333055163887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2set!4v1750943454124!5m2!1sen!2set"
         width="100%"
-        height="450" 
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy" 
+        height="450"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        class="rounded-lg shadow-lg pb-16">
+        class="rounded-lg shadow-lg pb-16"
+      >
       </iframe>
     </section>
 
     <!-- Contact Section -->
     <footer id="contact" class="bg-amber-800 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4">
+      <div class="max-w-7xl mx-auto px-4">
         <div class="grid md:grid-cols-4 gap-8">
-                <div class="flex items-center space-x-4">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center ">
-                        <img src="/asset/img/logo.jpg" alt="logo" class="w-16 h-16 rounded-4xl border-2 border-gray-200">
-                    </div>
-                    <div>
-                        
-                        <h3 class="text-2xl font-bold">2000 Habesha Cultural</h3>
-                        <p>Restaurant</p>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-xl font-bold mb-4">Contact us</h4>
-                    <p>habesha2000@gmail.com</p>
-                    <p>+251 912 838 383</p>
-                </div>
-                
-                <div>
-                    <h4 class="text-xl font-bold mb-4">Address</h4>
-                    <p>Addis Ababa, Namibia St.,</p>
-                    <p>Bole Atlas</p>
-                    <p>Addis Ababa, Around</p>
-                    <p>Ethiopian Skylight Hotel</p>
-                </div>
-                
-                <div>
-                    <h4 class="text-xl font-bold mb-4">Opening Hours</h4>
-                    <p>From Sunday To Sunday</p>
-                    <p>10AM - 11PM</p>
-                </div>
+          <div class="flex items-center space-x-4">
+            <div
+              class="w-16 h-16 bg-white rounded-full flex items-center justify-center"
+            >
+              <img
+                src="/asset/img/logo.jpg"
+                alt="logo"
+                class="w-16 h-16 rounded-4xl border-2 border-gray-200"
+              />
             </div>
-            
-            <div class="flex justify-center space-x-4 mt-8">
-                <a href="#" class="text-white hover:text-gray-300 transition-colors"><i class="fab fa-instagram text-2xl"></i></a>
-                <a href="#" class="text-white hover:text-gray-300 transition-colors"><i class="fab fa-facebook text-2xl"></i></a>
-                <a href="#" class="text-white hover:text-gray-300 transition-colors"><i class="fab fa-twitter text-2xl"></i></a>
-                <a href="#" class="text-white hover:text-gray-300 transition-colors"><i class="fab fa-linkedin text-2xl"></i></a>
+            <div>
+              <h3 class="text-2xl font-bold">2000 Habesha Cultural</h3>
+              <p>Restaurant</p>
             </div>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-bold mb-4">Contact us</h4>
+            <p>habesha2000@gmail.com</p>
+            <p>+251 912 838 383</p>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-bold mb-4">Address</h4>
+            <p>Addis Ababa, Namibia St.,</p>
+            <p>Bole Atlas</p>
+            <p>Addis Ababa, Around</p>
+            <p>Ethiopian Skylight Hotel</p>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-bold mb-4">Opening Hours</h4>
+            <p>From Sunday To Sunday</p>
+            <p>10AM - 11PM</p>
+          </div>
         </div>
+
+        <div class="flex justify-center space-x-4 mt-8">
+          <a href="#" class="text-white hover:text-gray-300 transition-colors"
+            ><i class="fab fa-instagram text-2xl"></i
+          ></a>
+          <a href="#" class="text-white hover:text-gray-300 transition-colors"
+            ><i class="fab fa-facebook text-2xl"></i
+          ></a>
+          <a href="#" class="text-white hover:text-gray-300 transition-colors"
+            ><i class="fab fa-twitter text-2xl"></i
+          ></a>
+          <a href="#" class="text-white hover:text-gray-300 transition-colors"
+            ><i class="fab fa-linkedin text-2xl"></i
+          ></a>
+        </div>
+      </div>
     </footer>
 
     <!-- Reservation Modal -->
-    <div id="reservationModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-        <div class="bg-amber-100 p-8 rounded-lg max-w-md w-full mx-4 relative">
-            <button onclick="closeReservationModal()" class="absolute top-4 right-4 text-gray-600 hover:text-gray-800">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <h2 class="text-3xl font-bold text-amber-800 mb-6">Reservation</h2>
-            <form id="reservationForm" class="space-y-4">
-                <div>
-                    <label class="block text-gray-700 mb-2">Full Name</label>
-                    <input type="text" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Enter your name">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Phone number</label>
-                    <input type="tel" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="+251 9XX XXX XXX">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Email</label>
-                    <input type="email" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Email address">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Number of guests</label>
-                    <input type="number" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Guests in number">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Date</label>
-                    <input type="date" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Time</label>
-                    <input type="time" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                </div>
-                <button type="submit" class="w-full bg-amber-800 text-white py-3 rounded-lg hover:bg-amber-900 transition-colors">
-                    Reserve Now
-                </button>
-            </form>
-        </div>
+    <div
+      id="reservationModal"
+      class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+    >
+      <div class="bg-amber-100 p-8 rounded-lg max-w-md w-full mx-4 relative">
+        <button
+          onclick="closeReservationModal()"
+          class="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+        >
+          <i class="fas fa-times text-xl"></i>
+        </button>
+        <h2 class="text-3xl font-bold text-amber-800 mb-6">Reservation</h2>
+        <form id="reservationForm" class="space-y-4">
+          <div>
+            <label class="block text-gray-700 mb-2">Full Name</label>
+            <input
+              type="text"
+              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Phone number</label>
+            <input
+              type="tel"
+              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              placeholder="+251 9XX XXX XXX"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              placeholder="Email address"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Number of guests</label>
+            <input
+              type="number"
+              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              placeholder="Guests in number"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Date</label>
+            <input
+              type="date"
+              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Time</label>
+            <input
+              type="time"
+              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-amber-800 text-white py-3 rounded-lg hover:bg-amber-900 transition-colors"
+          >
+            Reserve Now
+          </button>
+        </form>
+      </div>
     </div>
 
     <!-- Success Modal -->
-    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-lg max-w-sm w-full mx-4 text-center">
-            <div class="text-green-500 text-4xl mb-4">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h3 class="text-xl font-bold mb-2">Thank you!</h3>
-            <p id="successMessage" class="text-gray-600 mb-4">Your reservation has been confirmed!</p>
-            <button onclick="closeSuccessModal()" class="bg-amber-800 text-white px-6 py-2 rounded-lg hover:bg-amber-900 transition-colors">
-                OK
-            </button>
+    <div
+      id="successModal"
+      class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+    >
+      <div class="bg-white p-8 rounded-lg max-w-sm w-full mx-4 text-center">
+        <div class="text-green-500 text-4xl mb-4">
+          <i class="fas fa-check-circle"></i>
         </div>
-    </div>
-
-    <!-- Chat Widget Button -->
-    <button id="chatToggle" class="fixed bottom-5 right-5 bg-amber-800 text-white w-12 h-12 rounded-full shadow-lg hover:bg-amber-900 transition-colors z-40">
-        <i class="fas fa-comment"></i>
-    </button>
-    
-    <!-- Chat Window -->
-<div id="chatWindow" class="hidden fixed bottom-20 right-5 w-80 h-96 bg-white rounded-lg shadow-2xl z-50 flex flex-col overflow-hidden">
-
-    <!-- Chat Header -->
-    <div class="bg-amber-700 text-white px-4 py-2 flex justify-between items-center">
-        <h3 class="font-semibold text-sm">Chat With Us</h3>
-        <button id="closeChat" class="text-white hover:text-gray-200 text-sm">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <!-- Chat Messages Scrollable Area -->
-    <div id="chatMessages" class="flex-1 p-3 overflow-y-auto space-y-3 bg-amber-50">
-        <!-- Typing Indicator (hidden by default) -->
-        <div id="typingIndicator" class="flex items-start space-x-2 hidden">
-            <div class="w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center text-white text-xs">
-                🤖
-            </div>
-            <div class="bg-gray-200 px-3 py-1 rounded-lg text-sm">
-                <div class="flex space-x-1">
-                    <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                    <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-100"></div>
-                    <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce delay-200"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Quick Reply Buttons -->
-    <div class="bg-amber-100 px-3 py-2 flex flex-wrap gap-2">
-        <button class="quick-reply bg-amber-300 text-gray-800 px-2 py-1 rounded-full text-xs hover:bg-amber-400 transition-colors" data-message="Do you have vegan options?">
-            Vegan Options?
-        </button>
-        <button class="quick-reply bg-amber-300 text-gray-800 px-2 py-1 rounded-full text-xs hover:bg-amber-400 transition-colors" data-message="Can I book a table?">
-            Book a Table
-        </button>
-    </div>
-
-    <!-- Chat Input -->
-    <div class="bg-amber-700 p-3 flex space-x-2">
-        <input 
-            type="text" 
-            id="chatInput" 
-            placeholder="Type your question here..." 
-            class="flex-1 bg-white px-3 py-2 rounded-lg text-sm focus:outline-none"
+        <h3 class="text-xl font-bold mb-2">Thank you!</h3>
+        <p id="successMessage" class="text-gray-600 mb-4">
+          Your reservation has been confirmed!
+        </p>
+        <button
+          onclick="closeSuccessModal()"
+          class="bg-amber-800 text-white px-6 py-2 rounded-lg hover:bg-amber-900 transition-colors"
         >
-        <button id="sendMessage" class="bg-white px-3 py-2 rounded-lg hover:bg-gray-100">
-            <i class="fas fa-paper-plane text-gray-700 text-sm"></i>
+          OK
         </button>
+      </div>
     </div>
+<!--Kindly do not change any of the AI sections-->
+<!-- Chat Widget Button -->
+<button
+  id="chatToggle"
+  class="fixed bottom-5 right-5 bg-amber-800 text-white w-12 h-12 rounded-full shadow-lg hover:bg-amber-900 transition-colors z-40"
+>
+  <i class="fas fa-comment"></i>
+</button>
+
+<!-- Chat Window -->
+<div
+  id="chatWindow"
+  class="hidden fixed bottom-20 right-5 w-80 h-96 bg-white rounded-lg shadow-2xl z-50 flex flex-col"
+>
+  <!-- Chat Header -->
+  <div class="bg-gray-400 text-gray-600 px-4 py-2 rounded-t-lg text-sm">
+    ChatBot UI
+  </div>
+
+  <!-- Chat Title Bar -->
+  <div
+    class="bg-amber-700 text-white px-4 py-3 flex justify-between items-center"
+  >
+    <h3 class="font-semibold">Chat With Us</h3>
+    <button id="closeChat" class="text-white hover:text-gray-200">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Chat Messages Container -->
+  <div
+    id="chatMessages"
+    class="flex-1 bg-amber-700 p-4 overflow-y-auto space-y-3"
+  >
+    <!-- Bot Welcome Message -->
+    <div class="flex items-start space-x-2">
+      <div
+        class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0"
+      >
+        <i class="fas fa-robot text-white text-xs"></i>
+      </div>
+      <div
+        class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg max-w-xs text-sm"
+      >
+        Hello, How can I help you?
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Reply Buttons -->
+  <div class="bg-amber-700 px-4 py-2 space-y-2">
+    <div class="flex flex-wrap gap-2">
+      <button
+        class="quick-reply bg-amber-100 text-gray-800 px-3 py-1 rounded-full text-xs hover:bg-amber-200 transition-colors"
+        data-message="Do you have vegan options?"
+      >
+        Do you have vegan options?
+      </button>
+      <button
+        class="quick-reply bg-amber-100 text-gray-800 px-3 py-1 rounded-full text-xs hover:bg-amber-200 transition-colors"
+        data-message="Can I book a table?"
+      >
+        Can I book a table?
+      </button>
+    </div>
+  </div>
+
+  <!-- Chat Input -->
+  <div class="bg-amber-700 p-4 rounded-b-lg">
+    <div class="flex space-x-2">
+      <input
+        type="text"
+        id="chatInput"
+        placeholder="Type your question here..."
+        class="flex-1 bg-amber-100 text-gray-800 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+      />
+      <button
+        id="sendMessage"
+        class="bg-amber-100 text-gray-800 px-3 py-2 rounded-lg hover:bg-amber-200 transition-colors"
+      >
+        <i class="fas fa-paper-plane text-sm"></i>
+      </button>
+    </div>
+  </div>
 </div>
-
-
-    
     <script src="/src/script.js"></script>
-</body>
+  </body>
 </html>
