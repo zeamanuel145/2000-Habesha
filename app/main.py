@@ -18,6 +18,11 @@ app.add_middleware(
 
 class ChatRequest(BaseModel):
     user_message: str
+@app.post("/")
+async def chat_endpoint(message: Message):
+    user_message = message.user_message
+    # Dummy response for testing
+    return {"bot_response": f"You said: {user_message}"}
 
 restaurant_context = """
 You are the AI chatbot for Habesha Flavors Restaurant, based in Addis Ababa.
