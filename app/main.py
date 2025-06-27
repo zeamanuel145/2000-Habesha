@@ -23,6 +23,18 @@ async def chat_endpoint(message: Message):
     user_message = message.user_message
     # Dummy response for testing
     return {"bot_response": f"You said: {user_message}"}
+    @app.post("/")
+async def chatbot_endpoint(chat_request: ChatRequest):
+    user_message = chat_request.user_message
+
+    try:
+        # Example Gemini API call
+        model = genai.GenerativeModel('gemini-pro')
+        response = model.generate_content(user_message)
+        return {"bot_response": response.text.strip()}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 restaurant_context = """
 You are the AI chatbot for Habesha Flavors Restaurant, based in Addis Ababa.
