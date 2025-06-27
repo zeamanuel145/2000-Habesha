@@ -237,6 +237,9 @@ class RestaurantChatbot {
 }
 
 // Initialize chatbot
+document.addEventListener('DOMContentLoaded', function() {
+    initializeChatbot();
+});
 function initializeChatbot() {
     new RestaurantChatbot();
 }
