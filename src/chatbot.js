@@ -14,7 +14,7 @@ class RestaurantChatbot {
 
         this.isOpen = false;
         this.chatHistory = [];
-        this.apiEndpoint = '/chat'; // Using relative path for production
+        this.apiEndpoint = '/chat';
         this.retryCount = 0;
         this.maxRetries = 2;
 
@@ -28,17 +28,19 @@ class RestaurantChatbot {
     }
 
     setupEventListeners() {
-        // Toggle chat window
-        this.chatToggle?.addEventListener('click', () => this.toggleChat());
-        this.closeChat?.addEventListener('click', () => this.toggleChat());
+        // Toggle button
+        this.chatToggle?.addEventListener('click', () => this.openChat());
 
-        // Message sending
+        // Close button
+        this.closeChat?.addEventListener('click', () => this.closeChatWindow());
+
+        // Send message
         this.sendButton?.addEventListener('click', () => this.handleUserMessage());
         this.chatInput?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleUserMessage();
         });
 
-        // Quick replies
+        // Quick reply buttons
         this.quickReplyButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const message = button.getAttribute('data-message');
@@ -48,7 +50,6 @@ class RestaurantChatbot {
     }
 
     setupStyles() {
-        // Ensure chat window is initially hidden
         if (this.chatWindow) {
             this.chatWindow.classList.add('hidden');
         }
@@ -56,26 +57,27 @@ class RestaurantChatbot {
 
     loadWelcomeMessage() {
         if (this.chatMessages?.children.length === 0) {
-            this.addBotMessage("Hello! Welcome to 2000 Habesha Restaurant. How can I help you today?");
+            this.addBotMessage("**Hello!** 👋 Welcome to *2000 Habesha Restaurant*. How can I help you today?");
         }
     }
 
-    toggleChat() {
-        this.isOpen = !this.isOpen;
-        if (this.chatWindow) {
-            this.chatWindow.classList.toggle('hidden', !this.isOpen);
-            if (this.isOpen) {
-                this.chatInput?.focus();
-                this.scrollToBottom();
-            }
-        }
+    openChat() {
+        this.isOpen = true;
+        this.chatWindow?.classList.remove('hidden');
+        this.chatInput?.focus();
+        this.scrollToBottom();
+    }
+
+    closeChatWindow() {
+        this.isOpen = false;
+        this.chatWindow?.classList.add('hidden');
     }
 
     handleUserMessage() {
         const message = this.chatInput?.value.trim();
         if (message) {
-            this.processMessage(message);
             this.chatInput.value = '';
+            this.processMessage(message);
         }
     }
 
@@ -86,15 +88,11 @@ class RestaurantChatbot {
         try {
             const response = await this.fetchBotResponse(message);
             this.addBotMessage(response);
-            this.retryCount = 0; // Reset retry counter on success
+            this.retryCount = 0;
         } catch (error) {
-            console.error('Chat error:', error);
-            if (this.retryCount < this.maxRetries) {
-                this.retryCount++;
-                setTimeout(() => this.processMessage(message), 1000);
-            } else {
-                this.handleErrorState(message);
-            }
+            console.error('API Chat error:', error);
+            const fallbackResponse = this.getFallbackResponse(message);
+            this.addBotMessage(fallbackResponse);
         } finally {
             this.hideTypingIndicator();
         }
@@ -103,43 +101,38 @@ class RestaurantChatbot {
     async fetchBotResponse(message) {
         const response = await fetch(this.apiEndpoint, {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 user_message: message,
                 chat_history: this.chatHistory
             })
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`API Error: ${response.status}`);
         const data = await response.json();
         return data.bot_response;
     }
 
-    handleErrorState(userMessage) {
-        const fallbackResponse = this.getFallbackResponse(userMessage.toLowerCase());
-        this.addBotMessage(fallbackResponse || "Sorry! Our chatbot is currently unavailable. Please call us at +251 912 838 383.");
-    }
-
     getFallbackResponse(message) {
-        const fallbacks = {
-            "hours": "We're open daily from 10AM to 11PM, with live cultural shows on weekends!",
-            "menu": "Our menu features authentic Ethiopian dishes like Kitfo, Doro Wat, and vegetarian platters.",
-            "reservation": "Call +251 912 838 383 or visit our website to reserve a table.",
-            "location": "We're located on Namibia Street in Bole Atlas, near the Ethiopian Skylight Hotel."
-        };
+        const lower = message.toLowerCase();
 
-        if (message.includes('hour') || message.includes('time')) return fallbacks.hours;
-        if (message.includes('menu') || message.includes('food')) return fallbacks.menu;
-        if (message.includes('reserv') || message.includes('book')) return fallbacks.reservation;
-        if (message.includes('where') || message.includes('location')) return fallbacks.location;
-        
-        return null;
+        if (lower.includes('hour') || lower.includes('time')) {
+            return `**Hours:** 10AM - 11PM daily.`;
+        }
+        if (lower.includes('menu') || lower.includes('food')) {
+            return `**Menu Highlights:**\n- Kitfo\n- Doro Wat\n- Vegetarian platters`;
+        }
+        if (lower.includes('where') || lower.includes('location')) {
+            return `**Location:** Namibia Street, Bole Atlas (near Ethiopian Skylight Hotel).`;
+        }
+        if (lower.includes('reserv') || lower.includes('book') || lower.includes('table')) {
+            return `**Reservations:** Call us at +251 912 838 383.`;
+        }
+
+        return `❌ *Sorry! Our AI service is temporarily down.*\nFor urgent help, call **+251 912 838 383**.`;
     }
 
     addUserMessage(message) {
@@ -156,22 +149,22 @@ class RestaurantChatbot {
         if (!this.chatMessages) return;
 
         const messageDiv = document.createElement('div');
-        messageDiv.className = `flex items-start mb-4 ${sender === 'user' ? 'justify-end' : ''}`;
-        
+        messageDiv.className = `flex items-start mb-2 ${sender === 'user' ? 'justify-end' : ''}`;
+
         messageDiv.innerHTML = `
             ${sender === 'bot' ? `
-                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0 mr-2">
+                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mr-2">
                     <i class="fas fa-robot text-white text-xs"></i>
                 </div>
             ` : ''}
-            
+
             <div class="${sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-800'} 
-                px-4 py-2 rounded-lg max-w-xs md:max-w-md text-sm">
-                ${message}
+                px-3 py-2 rounded-lg max-w-xs md:max-w-md text-sm prose prose-sm">
+                ${this.renderMarkdown(message)}
             </div>
-            
+
             ${sender === 'user' ? `
-                <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0 ml-2">
+                <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center ml-2">
                     <i class="fas fa-user text-white text-xs"></i>
                 </div>
             ` : ''}
@@ -181,23 +174,31 @@ class RestaurantChatbot {
         this.scrollToBottom();
     }
 
-    showTypingIndicator() {
-        if (!this.typingIndicator) return;
+    renderMarkdown(text) {
+        return text
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // Bold
+            .replace(/\*(.+?)\*/g, '<em>$1</em>')              // Italics
+            .replace(/- (.+)/g, '<li>$1</li>')                 // Bullet lists
+            .replace(/\n/g, '<br>');                           // Line breaks
+    }
 
-        this.typingIndicator.classList.remove('hidden');
-        this.typingIndicator.innerHTML = `
-            <div class="flex items-center">
-                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center flex-shrink-0 mr-2">
-                    <i class="fas fa-robot text-white text-xs"></i>
+    showTypingIndicator() {
+        if (this.typingIndicator) {
+            this.typingIndicator.classList.remove('hidden');
+            this.typingIndicator.innerHTML = `
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mr-2">
+                        <i class="fas fa-robot text-white text-xs"></i>
+                    </div>
+                    <div class="typing-dots flex space-x-1">
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
+                    </div>
                 </div>
-                <div class="typing-dots flex space-x-1">
-                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
-                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
-                </div>
-            </div>
-        `;
-        this.scrollToBottom();
+            `;
+            this.scrollToBottom();
+        }
     }
 
     hideTypingIndicator() {
@@ -211,7 +212,6 @@ class RestaurantChatbot {
     }
 }
 
-// Initialize chatbot when DOM is loaded
 if (document.readyState !== 'loading') {
     new RestaurantChatbot();
 } else {
