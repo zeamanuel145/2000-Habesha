@@ -99,7 +99,7 @@ class RestaurantChatbot {
     }
 
     async fetchBotResponse(message) {
-        const response = await fetch(this.apiEndpoint, {
+        const response = await fetch('https://two000-habesha.onrender.com', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -110,12 +110,12 @@ class RestaurantChatbot {
                 chat_history: this.chatHistory
             })
         });
-
+    
         if (!response.ok) throw new Error(`API Error: ${response.status}`);
         const data = await response.json();
         return data.bot_response;
     }
-
+    
     getFallbackResponse(message) {
         const lower = message.toLowerCase();
 
