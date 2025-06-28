@@ -14,7 +14,7 @@ class RestaurantChatbot {
 
         this.isOpen = false;
         this.chatHistory = [];
-        this.apiEndpoint = '/chat';
+        this.apiEndpoint = 'https://two000-habesha.onrender.com/chat';  // ✅ Fixed endpoint
         this.retryCount = 0;
         this.maxRetries = 2;
 
@@ -28,19 +28,14 @@ class RestaurantChatbot {
     }
 
     setupEventListeners() {
-        // Toggle button
         this.chatToggle?.addEventListener('click', () => this.openChat());
-
-        // Close button
         this.closeChat?.addEventListener('click', () => this.closeChatWindow());
 
-        // Send message
         this.sendButton?.addEventListener('click', () => this.handleUserMessage());
         this.chatInput?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleUserMessage();
         });
 
-        // Quick reply buttons
         this.quickReplyButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const message = button.getAttribute('data-message');
@@ -99,7 +94,7 @@ class RestaurantChatbot {
     }
 
     async fetchBotResponse(message) {
-        const response = await fetch('https://two000-habesha.onrender.com', {
+        const response = await fetch(this.apiEndpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -110,12 +105,12 @@ class RestaurantChatbot {
                 chat_history: this.chatHistory
             })
         });
-    
+
         if (!response.ok) throw new Error(`API Error: ${response.status}`);
         const data = await response.json();
         return data.bot_response;
     }
-    
+
     getFallbackResponse(message) {
         const lower = message.toLowerCase();
 
