@@ -11,6 +11,13 @@ import google.generativeai as genai
 from google.api_core import exceptions as google_exceptions
 import logging
 from src.app.config import settings
+import google.generativeai as genai
+from src.app.config import settings
+
+genai.configure(api_key=settings.GEMINI_API_KEY)
+
+model = genai.GenerativeModel(settings.GEMINI_MODEL)
+
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,

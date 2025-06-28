@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class Settings(BaseSettings):
     GEMINI_API_KEY: str = Field(..., min_length=20)
-    GEMINI_MODEL: str = "gemini-1.5-pro"
+    GEMINI_MODEL: str = "gemini-1.5-pro-latest"
 
     # Gemini safety settings (set to block none for dev)
     GEMINI_SAFETY_SETTINGS: list = [
