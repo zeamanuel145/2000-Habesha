@@ -95,10 +95,9 @@ def get_model_info():
 async def chat(request: Request, chat_request: ChatRequest):
     try:
         history = [
-            {"role": "user" if msg["sender"] == "user" else "model", "content": msg["message"]}
-            for msg in chat_request.chat_history
-        ]
-
+    {"role": "user" if msg["sender"] == "user" else "model", "parts": [msg["message"]]}
+    for msg in chat_request.chat_history
+]
         chat_session = model.start_chat(history=history)
 
         response = chat_session.send_message(
