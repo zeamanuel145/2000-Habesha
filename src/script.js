@@ -59,6 +59,8 @@ function initializeFormListeners() {
         console.error('Reservation form not found');
     }
 
+
+    
     // Feedback form
     const feedbackForm = document.getElementById('feedbackForm');
     if (feedbackForm) {
