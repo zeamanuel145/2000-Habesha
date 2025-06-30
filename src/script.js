@@ -41,6 +41,8 @@ function updateStars(rating) {
     });
 }
 
+
+
 // Initialize form listeners - NEW FUNCTION
 function initializeFormListeners() {
     // Reservation form
