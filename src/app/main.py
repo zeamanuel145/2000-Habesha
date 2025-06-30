@@ -16,7 +16,7 @@ from src.app.config import settings
 
 genai.configure(api_key=settings.GEMINI_API_KEY)
 
-model = genai.GenerativeModel(settings.GEMINI_MODEL)
+
 
 
 logging.basicConfig(
@@ -45,7 +45,7 @@ app.add_middleware(
 genai.configure(api_key=settings.GEMINI_API_KEY)
 
 model = genai.GenerativeModel(
-    model_name=settings.GEMINI_MODEL,
+    settings.GEMINI_MODEL,
     safety_settings=settings.GEMINI_SAFETY_SETTINGS
 )
 
@@ -95,7 +95,7 @@ def get_model_info():
 async def chat(request: Request, chat_request: ChatRequest):
     try:
         history = [
-            {"role": "user" if msg["sender"] == "user" else "model", "content": msg["message"]}
+            {"role": "user" if msg["sender"] == "user" else "model", "parts": [msg["message"]]}
             for msg in chat_request.chat_history
         ]
 

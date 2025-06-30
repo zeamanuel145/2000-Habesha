@@ -33,7 +33,8 @@ class Settings(BaseSettings):
         "http://localhost",
         "http://127.0.0.1",
         "http://localhost:*",
-        "http://127.0.0.1:*"
+        "http://127.0.0.1:*",
+        "https://2000habesharestarant.netlify.app"  # ✅ Added Netlify frontend domain here
     ]
 
     RATE_LIMIT: str = "10/minute"
