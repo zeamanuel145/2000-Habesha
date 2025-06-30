@@ -1,3 +1,17 @@
 .env
 __pycache__/
 node_modules/
+.gitignore
+.env
+docker-compose.yml
+Dockerfile  
+README.md
+package.json
+package-lock.json
+.vscode/
+.vscode/settings.json
+.vscode/extensions.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/gitignore
+.vscode/.gitignore  
