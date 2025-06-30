@@ -2,7 +2,7 @@
 __pycache__/
 node_modules/
 .gitignore
-.env
+
 docker-compose.yml
 Dockerfile  
 README.md
